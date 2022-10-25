@@ -32,7 +32,7 @@ final class NetworkService {
             completion?(.failure(.urlFailure))
             return
         }
-//
+
         url.append(queryItems: [
             URLQueryItem(name: "api_key", value: apiKey),
             URLQueryItem(name: "language", value: "ru-RU")
@@ -41,7 +41,7 @@ final class NetworkService {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//
+
         session.dataTask(with: request) { [weak self] data, _, _ in
             guard let self else { return }
             if let data {

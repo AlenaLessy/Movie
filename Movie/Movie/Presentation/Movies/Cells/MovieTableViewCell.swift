@@ -8,12 +8,13 @@
 import UIKit
 
 final class MovieTableViewCell: UITableViewCell {
+    let imagePath = "https://image.tmdb.org/t/p/w500"
+
     // MARK: - Private Outlets
 
     private var movieImageView: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.backgroundColor = .green
         return image
     }()
 
@@ -72,13 +73,14 @@ final class MovieTableViewCell: UITableViewCell {
     }
 
     func update(_ movie: Movie) {
-//        movieImageView.image = UIImage(named: movieCell.movieImageName)
         movieNameLabel.text = movie.title
         movieDescriptionLabel.text = movie.overview
         movieRatingLabel.text = movie.rating.description
+        guard let url = movie.posterPath else { return }
+        movieImageView.loadImage(baseUrlString: imagePath, urlImage: url)
     }
 
-    // Constrains
+    // MARK: - Constrains
 
     private func configureLayoutAnchor() {
         let constraint = movieImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
@@ -89,7 +91,6 @@ final class MovieTableViewCell: UITableViewCell {
             movieImageView.heightAnchor.constraint(equalToConstant: 150),
             movieImageView.widthAnchor.constraint(equalToConstant: 120),
             constraint,
-//            movieImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
 
             movieNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             movieNameLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 16),
