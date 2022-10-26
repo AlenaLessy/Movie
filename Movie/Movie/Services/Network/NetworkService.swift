@@ -27,8 +27,8 @@ final class NetworkService {
     // базовый адрес
     private let baseUrlString = "https://api.themoviedb.org/3/"
     // куда мы идем и что мы отдаем серверу
-    func requestMovies(completion: ((Result<[Movie], NetworkError>) -> ())?) {
-        guard var url = URL(string: baseUrlString + "movie/popular") else {
+    func requestMovies(currentUrl: String, completion: ((Result<[Movie], NetworkError>) -> ())?) {
+        guard var url = URL(string: baseUrlString + currentUrl) else {
             completion?(.failure(.urlFailure))
             return
         }

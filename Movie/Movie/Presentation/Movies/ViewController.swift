@@ -21,6 +21,7 @@ final class ViewController: UIViewController {
         btn.setTitleColor(.cyan, for: .selected)
         btn.titleLabel?.adjustsFontSizeToFitWidth = true
         btn.titleLabel?.numberOfLines = 0
+        btn.tag = 0
         return btn
     }()
 
@@ -34,6 +35,7 @@ final class ViewController: UIViewController {
         btn.setTitleColor(.cyan, for: .selected)
         btn.titleLabel?.adjustsFontSizeToFitWidth = true
         btn.titleLabel?.numberOfLines = 0
+        btn.tag = 1
         return btn
     }()
 
@@ -47,6 +49,7 @@ final class ViewController: UIViewController {
         btn.setTitleColor(.cyan, for: .selected)
         btn.titleLabel?.adjustsFontSizeToFitWidth = true
         btn.titleLabel?.numberOfLines = 0
+        btn.tag = 2
         return btn
     }()
 
@@ -68,8 +71,8 @@ final class ViewController: UIViewController {
         addSubviews()
         configureLayoutAnchor()
         configureTableView()
-
-        networkService.requestMovies { [weak self] result in
+        buttonConfigure()
+        networkService.requestMovies(currentUrl: "movie/popular") { [weak self] result in
             switch result {
             case let .success(movies):
                 DispatchQueue.main.async {
@@ -84,7 +87,68 @@ final class ViewController: UIViewController {
 
     private let networkService = NetworkService.shared
 
+    // MARK: - Private Actions
+
+    @objc private func buttonAction(_ sender: UIButton) {
+        switch sender.tag {
+        case 0:
+            networkService.requestMovies(currentUrl: "movie/popular") { [weak self] result in
+                switch result {
+                case let .success(movies):
+                    DispatchQueue.main.async {
+                        self?.movies = movies
+                        self?.movieTableView.reloadData()
+                    }
+                case let .failure(error):
+                    print("test failure \(error)")
+                }
+            }
+        case 1:
+            networkService.requestMovies(currentUrl: "movie/top_rated") { [weak self] result in
+                switch result {
+                case let .success(movies):
+                    DispatchQueue.main.async {
+                        self?.movies = movies
+                        self?.movieTableView.reloadData()
+                    }
+                case let .failure(error):
+                    print("test failure \(error)")
+                }
+            }
+        case 2:
+            networkService.requestMovies(currentUrl: "movie/upcoming") { [weak self] result in
+                switch result {
+                case let .success(movies):
+                    DispatchQueue.main.async {
+                        self?.movies = movies
+                        self?.movieTableView.reloadData()
+                    }
+                case let .failure(error):
+                    print("test failure \(error)")
+                }
+            }
+        default:
+            networkService.requestMovies(currentUrl: "movie/popular") { [weak self] result in
+                switch result {
+                case let .success(movies):
+                    DispatchQueue.main.async {
+                        self?.movies = movies
+                        self?.movieTableView.reloadData()
+                    }
+                case let .failure(error):
+                    print("test failure \(error)")
+                }
+            }
+        }
+    }
+
     // MARK: - Private Methods
+
+    private func buttonConfigure() {
+        topRatedButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        popularButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        upCommingButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+    }
 
     private func addSubviews() {
         view.addSubview(topRatedButton)
@@ -145,6 +209,16 @@ extension ViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let degree = 90
+        let rotationAngel = CGFloat(Double(degree) * .pi / 180)
+        let rotationPTransform = CATransform3DMakeRotation(rotationAngel, 1, 0, 0)
+        cell.layer.transform = rotationPTransform
+        UIView.animate(withDuration: 1, delay: 0.3) {
+            cell.layer.transform = CATransform3DIdentity
+        }
     }
 }
 
