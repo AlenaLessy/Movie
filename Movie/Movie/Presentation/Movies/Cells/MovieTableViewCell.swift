@@ -7,8 +7,9 @@
 
 import UIKit
 
+// Ячейка фильма
 final class MovieTableViewCell: UITableViewCell {
-    let imagePath = "https://image.tmdb.org/t/p/w500"
+    // MARK: - Private
 
     // MARK: - Private Outlets
 
@@ -21,17 +22,15 @@ final class MovieTableViewCell: UITableViewCell {
     private var movieNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "rfrfarg  l`sfgnbzl"
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont(name: "Arial", size: 17)
+        label.font = UIFont.systemFont(ofSize: 17)
         return label
     }()
 
     private var movieDescriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "rfrfarg  l`sfgnbzlafakkvkfvkvfkvkvkv"
         label.textColor = .white
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 14)
@@ -42,14 +41,13 @@ final class MovieTableViewCell: UITableViewCell {
     private var movieRatingLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "5"
         label.textColor = .yellow
         label.textAlignment = .left
-        label.font = UIFont(name: "Arial", size: 20)
+        label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
 
-    // MARK: - LifeCycle
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -77,7 +75,7 @@ final class MovieTableViewCell: UITableViewCell {
         movieDescriptionLabel.text = movie.overview
         movieRatingLabel.text = movie.rating.description
         guard let url = movie.posterPath else { return }
-        movieImageView.loadImage(baseUrlString: imagePath, urlImage: url)
+        movieImageView.loadImage(urlImage: url)
     }
 
     // MARK: - Constrains
@@ -101,7 +99,7 @@ final class MovieTableViewCell: UITableViewCell {
             movieDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
             movieRatingLabel.topAnchor.constraint(equalTo: movieDescriptionLabel.bottomAnchor, constant: 5),
-            movieRatingLabel.leadingAnchor.constraint(equalTo: movieDescriptionLabel.leadingAnchor),
+            movieRatingLabel.leadingAnchor.constraint(equalTo: movieDescriptionLabel.leadingAnchor, constant: -45),
             movieRatingLabel.trailingAnchor.constraint(equalTo: movieDescriptionLabel.trailingAnchor),
             movieRatingLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
