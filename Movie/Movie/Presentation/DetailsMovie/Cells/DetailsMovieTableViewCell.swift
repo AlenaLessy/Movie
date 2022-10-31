@@ -26,17 +26,7 @@ final class DetailsMovieTableViewCell: UITableViewCell {
         static let starFill = "star.fill"
     }
 
-    // MARK: - Private Outlets
-
-    private var relatedMoviesLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = Constants.relatedMoviesLabelText
-        label.textColor = .white
-        label.textAlignment = .left
-        label.font = .systemFont(ofSize: 16, weight: .bold)
-        return label
-    }()
+    // MARK: - Public Outlets
 
     lazy var collectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -54,6 +44,18 @@ final class DetailsMovieTableViewCell: UITableViewCell {
         collectionView.contentInset.top = 40
         collectionView.contentInset.bottom = 20
         return collectionView
+    }()
+
+    // MARK: - Private Outlets
+
+    private var relatedMoviesLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = Constants.relatedMoviesLabelText
+        label.textColor = .white
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 16, weight: .bold)
+        return label
     }()
 
     private var movieImageView: UIImageView = {
@@ -246,63 +248,139 @@ final class DetailsMovieTableViewCell: UITableViewCell {
     // MARK: - Constrains
 
     private func configureLayoutAnchor() {
+        movieNameLabelConstrains()
+        movieImageViewConstrains()
+        backgroundDescriptionViewConstrains()
+        countryIssueLabelConstrains()
+        currentCountryIssueLabelConstrains()
+        releaseDateLabelConstrains()
+        currentReleaseDateLabelConstrains()
+        separationStripViewConstrains()
+        timeImageViewConstrains()
+        currentTimeLabelConstrains()
+        ratingImageViewConstrains()
+        ratingLabelConstrains()
+        separationStripTwoViewConstrains()
+        descriptionLabelConstrains()
+        movieDescriptionLabelConstrains()
+        separationStripThreeViewConstrains()
+        relatedMoviesLabelConstrains()
+        collectionViewConstrains()
+    }
+
+    private func movieNameLabelConstrains() {
         NSLayoutConstraint.activate([
             movieNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             movieNameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            movieNameLabel.widthAnchor.constraint(equalToConstant: 400),
+            movieNameLabel.widthAnchor.constraint(equalToConstant: 400)
+        ])
+    }
 
+    private func movieImageViewConstrains() {
+        NSLayoutConstraint.activate([
             movieImageView.topAnchor.constraint(equalTo: movieNameLabel.bottomAnchor, constant: 15),
             movieImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             movieImageView.heightAnchor.constraint(equalToConstant: 280),
-            movieImageView.widthAnchor.constraint(equalToConstant: 280),
+            movieImageView.widthAnchor.constraint(equalToConstant: 280)
+        ])
+    }
 
+    private func backgroundDescriptionViewConstrains() {
+        NSLayoutConstraint.activate([
             backgroundDescriptionView.topAnchor.constraint(equalTo: movieImageView.bottomAnchor, constant: -5),
             backgroundDescriptionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             backgroundDescriptionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            // backgroundDescriptionView.heightAnchor.constraint(equalToConstant: 800),
-            backgroundDescriptionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            backgroundDescriptionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+    }
 
+    private func countryIssueLabelConstrains() {
+        NSLayoutConstraint.activate([
             countryIssueLabel.topAnchor.constraint(equalTo: backgroundDescriptionView.topAnchor, constant: 20),
-            countryIssueLabel.leadingAnchor.constraint(equalTo: backgroundDescriptionView.leadingAnchor, constant: 20),
+            countryIssueLabel.leadingAnchor.constraint(equalTo: backgroundDescriptionView.leadingAnchor, constant: 20)
+        ])
+    }
 
+    private func currentCountryIssueLabelConstrains() {
+        NSLayoutConstraint.activate([
             currentCountryIssueLabel.topAnchor.constraint(equalTo: countryIssueLabel.bottomAnchor, constant: 5),
-            currentCountryIssueLabel.leadingAnchor.constraint(equalTo: countryIssueLabel.leadingAnchor),
+            currentCountryIssueLabel.leadingAnchor.constraint(equalTo: countryIssueLabel.leadingAnchor)
+        ])
+    }
 
+    private func releaseDateLabelConstrains() {
+        NSLayoutConstraint.activate([
             releaseDateLabel.topAnchor.constraint(equalTo: countryIssueLabel.topAnchor),
-            releaseDateLabel.leadingAnchor.constraint(equalTo: countryIssueLabel.trailingAnchor, constant: 80),
+            releaseDateLabel.leadingAnchor.constraint(equalTo: countryIssueLabel.trailingAnchor, constant: 80)
+        ])
+    }
 
+    private func currentReleaseDateLabelConstrains() {
+        NSLayoutConstraint.activate([
             currentReleaseDateLabel.topAnchor.constraint(equalTo: currentCountryIssueLabel.topAnchor),
-            currentReleaseDateLabel.leadingAnchor.constraint(equalTo: releaseDateLabel.leadingAnchor),
+            currentReleaseDateLabel.leadingAnchor.constraint(equalTo: releaseDateLabel.leadingAnchor)
+        ])
+    }
 
+    private func separationStripViewConstrains() {
+        NSLayoutConstraint.activate([
             separationStripView.topAnchor.constraint(equalTo: currentReleaseDateLabel.bottomAnchor, constant: 20),
             separationStripView.widthAnchor.constraint(equalTo: backgroundDescriptionView.widthAnchor),
             separationStripView.leadingAnchor.constraint(equalTo: backgroundDescriptionView.leadingAnchor),
-            separationStripView.heightAnchor.constraint(equalToConstant: 1),
+            separationStripView.heightAnchor.constraint(equalToConstant: 1)
+        ])
+    }
 
+    private func timeImageViewConstrains() {
+        NSLayoutConstraint.activate([
             timeImageView.topAnchor.constraint(equalTo: separationStripView.bottomAnchor, constant: 15),
             timeImageView.leadingAnchor.constraint(equalTo: backgroundDescriptionView.leadingAnchor, constant: 20),
             timeImageView.heightAnchor.constraint(equalToConstant: 25),
-            timeImageView.widthAnchor.constraint(equalToConstant: 25),
+            timeImageView.widthAnchor.constraint(equalToConstant: 25)
+        ])
+    }
 
+    private func currentTimeLabelConstrains() {
+        NSLayoutConstraint.activate([
             currentTimeLabel.centerYAnchor.constraint(equalTo: timeImageView.centerYAnchor),
-            currentTimeLabel.leadingAnchor.constraint(equalTo: timeImageView.trailingAnchor, constant: 5),
+            currentTimeLabel.leadingAnchor.constraint(equalTo: timeImageView.trailingAnchor, constant: 5)
+        ])
+    }
 
+    private func ratingImageViewConstrains() {
+        NSLayoutConstraint.activate([
             ratingImageView.topAnchor.constraint(equalTo: timeImageView.topAnchor),
             ratingImageView.leadingAnchor.constraint(equalTo: releaseDateLabel.leadingAnchor),
             ratingImageView.heightAnchor.constraint(equalToConstant: 25),
-            ratingImageView.widthAnchor.constraint(equalToConstant: 25),
+            ratingImageView.widthAnchor.constraint(equalToConstant: 25)
+        ])
+    }
 
+    private func ratingLabelConstrains() {
+        NSLayoutConstraint.activate([
             ratingLabel.centerYAnchor.constraint(equalTo: ratingImageView.centerYAnchor),
-            ratingLabel.leadingAnchor.constraint(equalTo: ratingImageView.trailingAnchor, constant: 5),
+            ratingLabel.leadingAnchor.constraint(equalTo: ratingImageView.trailingAnchor, constant: 5)
+        ])
+    }
 
+    private func separationStripTwoViewConstrains() {
+        NSLayoutConstraint.activate([
             separationStripTwoView.topAnchor.constraint(equalTo: currentTimeLabel.bottomAnchor, constant: 20),
             separationStripTwoView.widthAnchor.constraint(equalTo: backgroundDescriptionView.widthAnchor),
             separationStripTwoView.leadingAnchor.constraint(equalTo: backgroundDescriptionView.leadingAnchor),
-            separationStripTwoView.heightAnchor.constraint(equalToConstant: 1),
+            separationStripTwoView.heightAnchor.constraint(equalToConstant: 1)
+        ])
+    }
 
+    private func descriptionLabelConstrains() {
+        NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: separationStripTwoView.topAnchor, constant: 20),
-            descriptionLabel.leadingAnchor.constraint(equalTo: countryIssueLabel.leadingAnchor),
+            descriptionLabel.leadingAnchor.constraint(equalTo: countryIssueLabel.leadingAnchor)
+        ])
+    }
 
+    private func movieDescriptionLabelConstrains() {
+        NSLayoutConstraint.activate([
             movieDescriptionLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 5),
             movieDescriptionLabel.leadingAnchor.constraint(
                 equalTo: backgroundDescriptionView.leadingAnchor,
@@ -311,22 +389,33 @@ final class DetailsMovieTableViewCell: UITableViewCell {
             movieDescriptionLabel.trailingAnchor.constraint(
                 equalTo: backgroundDescriptionView.trailingAnchor,
                 constant: -20
-            ),
+            )
+        ])
+    }
 
+    private func separationStripThreeViewConstrains() {
+        NSLayoutConstraint.activate([
             separationStripThreeView.topAnchor.constraint(equalTo: movieDescriptionLabel.bottomAnchor, constant: 20),
             separationStripThreeView.widthAnchor.constraint(equalTo: backgroundDescriptionView.widthAnchor),
             separationStripThreeView.leadingAnchor.constraint(equalTo: backgroundDescriptionView.leadingAnchor),
-            separationStripThreeView.heightAnchor.constraint(equalToConstant: 1),
+            separationStripThreeView.heightAnchor.constraint(equalToConstant: 1)
+        ])
+    }
 
+    private func relatedMoviesLabelConstrains() {
+        NSLayoutConstraint.activate([
             relatedMoviesLabel.topAnchor.constraint(equalTo: separationStripThreeView.bottomAnchor, constant: 20),
-            relatedMoviesLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
+            relatedMoviesLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor)
+        ])
+    }
 
+    private func collectionViewConstrains() {
+        NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: relatedMoviesLabel.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 200),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-
         ])
     }
 }

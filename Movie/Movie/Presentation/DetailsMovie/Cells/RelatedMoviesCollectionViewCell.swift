@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Ячейка рекомендованных фильмов
 final class RelatedMoviesCollectionViewCell: UICollectionViewCell {
     // MARK: - Private Outlets
 

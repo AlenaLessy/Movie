@@ -9,9 +9,9 @@ import Foundation
 
 /// Модель массива рекоммендации
 struct RecommendationMovieResponse: Decodable {
+    let movies: [RecommendationMovie]
+
     enum CodingKeys: String, CodingKey {
         case movies = "results"
     }
-
-    let movies: [RecommendationMovie]
 }

@@ -173,6 +173,27 @@ final class MoviesViewController: UIViewController {
         }
     }
 
+    private func requestMovieDetails(index: Int) {
+        let movie = movies[index]
+        networkService.requestMovie(id: movie.id) { [weak self] result in
+
+            switch result {
+            case .failure(.urlFailure):
+                print(Constants.urlFailureText)
+            case .failure(.unknown):
+                print(Constants.uncnownFailureText)
+            case .failure(.decodingFailure):
+                print(Constants.decodingFailureText)
+            case let .success(movieDetails):
+                DispatchQueue.main.async {
+                    let detailsMovieViewController = DetailsMovieViewController()
+                    detailsMovieViewController.movieDetails = movieDetails
+                    self?.navigationController?.pushViewController(detailsMovieViewController, animated: true)
+                }
+            }
+        }
+    }
+
     private func buttonConfigure() {
         topRatedButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         popularButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -198,30 +219,53 @@ final class MoviesViewController: UIViewController {
     // MARK: - Constrains
 
     private func configureLayoutAnchor() {
+        topRatedButtonConstraint()
+        popularButtonConstraint()
+        upCommingButtonConstraint()
+        movieTableViewConstraint()
+        activityIndicatorViewConstraint()
+    }
+
+    private func topRatedButtonConstraint() {
         NSLayoutConstraint.activate([
             topRatedButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             topRatedButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             topRatedButton.heightAnchor.constraint(equalToConstant: 50),
-            topRatedButton.widthAnchor.constraint(equalToConstant: 110),
+            topRatedButton.widthAnchor.constraint(equalToConstant: 110)
+        ])
+    }
 
+    private func popularButtonConstraint() {
+        NSLayoutConstraint.activate([
             popularButton.topAnchor.constraint(equalTo: topRatedButton.topAnchor),
             popularButton.leadingAnchor.constraint(equalTo: topRatedButton.trailingAnchor, constant: 15),
             popularButton.heightAnchor.constraint(equalToConstant: 50),
-            popularButton.widthAnchor.constraint(equalToConstant: 110),
+            popularButton.widthAnchor.constraint(equalToConstant: 110)
+        ])
+    }
 
+    private func upCommingButtonConstraint() {
+        NSLayoutConstraint.activate([
             upCommingButton.topAnchor.constraint(equalTo: topRatedButton.topAnchor),
             upCommingButton.leadingAnchor.constraint(equalTo: popularButton.trailingAnchor, constant: 15),
             upCommingButton.heightAnchor.constraint(equalToConstant: 50),
-            upCommingButton.widthAnchor.constraint(equalToConstant: 110),
+            upCommingButton.widthAnchor.constraint(equalToConstant: 110)
+        ])
+    }
 
+    private func movieTableViewConstraint() {
+        NSLayoutConstraint.activate([
             movieTableView.topAnchor.constraint(equalTo: topRatedButton.bottomAnchor, constant: 20),
             movieTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             movieTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            movieTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            movieTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
 
+    private func activityIndicatorViewConstraint() {
+        NSLayoutConstraint.activate([
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-
         ])
     }
 }
@@ -263,22 +307,6 @@ extension MoviesViewController: UITableViewDataSource {
 /// UITableViewDelegate
 extension MoviesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movie = movies[indexPath.row]
-        networkService.requestMovie(id: movie.id) { result in
-            switch result {
-            case .failure(.urlFailure):
-                print(Constants.urlFailureText)
-            case .failure(.unknown):
-                print(Constants.uncnownFailureText)
-            case .failure(.decodingFailure):
-                print(Constants.decodingFailureText)
-            case let .success(movieDetails):
-                DispatchQueue.main.async {
-                    let detailsMovieViewController = DetailsMovieViewController()
-                    detailsMovieViewController.movieDetails = movieDetails
-                    self.navigationController?.pushViewController(detailsMovieViewController, animated: true)
-                }
-            }
-        }
+        requestMovieDetails(index: indexPath.row)
     }
 }

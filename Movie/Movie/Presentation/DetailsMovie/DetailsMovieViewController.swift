@@ -54,8 +54,6 @@ class DetailsMovieViewController: UIViewController {
     private func requestMovies() {
         networkService.requestRecommendationsMovie(id: movieDetails?.id ?? 0) { [weak self] result in
             guard let self else { return }
-            DispatchQueue.main.async {}
-
             switch result {
             case let .success(response):
                 self.recommendationMovies = response.movies

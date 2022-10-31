@@ -81,6 +81,13 @@ final class MovieTableViewCell: UITableViewCell {
     // MARK: - Constrains
 
     private func configureLayoutAnchor() {
+        movieImageViewConstraint()
+        movieNameLabelConstraint()
+        movieDescriptionLabelConstraint()
+        movieRatingLabelConstraint()
+    }
+
+    private func movieImageViewConstraint() {
         let constraint = movieImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         constraint.priority = UILayoutPriority(999)
         NSLayoutConstraint.activate([
@@ -88,16 +95,28 @@ final class MovieTableViewCell: UITableViewCell {
             movieImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             movieImageView.heightAnchor.constraint(equalToConstant: 150),
             movieImageView.widthAnchor.constraint(equalToConstant: 120),
-            constraint,
+            constraint
+        ])
+    }
 
+    private func movieNameLabelConstraint() {
+        NSLayoutConstraint.activate([
             movieNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             movieNameLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 16),
-            movieNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            movieNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+        ])
+    }
 
+    private func movieDescriptionLabelConstraint() {
+        NSLayoutConstraint.activate([
             movieDescriptionLabel.topAnchor.constraint(equalTo: movieNameLabel.bottomAnchor, constant: 5),
             movieDescriptionLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 16),
-            movieDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            movieDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+        ])
+    }
 
+    private func movieRatingLabelConstraint() {
+        NSLayoutConstraint.activate([
             movieRatingLabel.topAnchor.constraint(equalTo: movieDescriptionLabel.bottomAnchor, constant: 5),
             movieRatingLabel.leadingAnchor.constraint(equalTo: movieDescriptionLabel.leadingAnchor, constant: -45),
             movieRatingLabel.trailingAnchor.constraint(equalTo: movieDescriptionLabel.trailingAnchor),
