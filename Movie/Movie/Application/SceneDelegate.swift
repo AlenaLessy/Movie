@@ -8,17 +8,22 @@
 import UIKit
 ///
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    private enum Constants {
-        static let key = "NewKey"
-    }
-
     var window: UIWindow?
 
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
         options connectionOptions: UIScene.ConnectionOptions
-    ) {}
+    ) {
+        guard let scene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: scene)
+        let viewController = MoviesViewController()
+        let navigationVC = UINavigationController(rootViewController: viewController)
+        window.rootViewController = navigationVC
+        window.makeKeyAndVisible()
+        window.backgroundColor = .black
+        self.window = window
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
